@@ -1,7 +1,11 @@
 package tw.kane.teamsTest;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,10 +14,17 @@ public class Main {
                 "C:\\chromedriver.exe"
         );
 
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setHeadless(true);
 
-        driver.get("https://google.com");
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-        System.out.println(driver.getTitle());
+        driver.get(System.getenv("URL"));
+
+        driver.findElement(By.id("openTeamsClientInBrowser")).click();
+        System.out.println("clicked first");
+        driver.findElement(By.cssSelector("a[track-name=\"1104\"]")).click();
+        System.out.println("clicked second");
     }
 }
